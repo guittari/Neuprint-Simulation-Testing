@@ -1,0 +1,128 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Setup Neuron model\n",
+    "from neuprint import Client\n",
+    "\n",
+    "TOKEN = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5nMjgwMWFAc3R1ZGVudC5hbWVyaWNhbi5lZHUiLCJsZXZlbCI6Im5vYXV0aCIsImltYWdlLXVybCI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBVFhBSndNLXljTFZ2bUQzM3NhYkdkZ09iR2xVenUxWWF1N1dsVDBBN3NxPXM5Ni1jP3N6PTUwP3N6PTUwIiwiZXhwIjoxODAzMDc5MTM4fQ.SWiapznzJ2zKyKuccDWw4sjXsjqm4YnALk4DR3DGGmY\" # <--- Paste your token here\n",
+    "         \n",
+    "\n",
+    "client = Client(\"neuprint.janelia.org\", \"hemibrain:v1.0.1\", TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting package metadata (current_repodata.json): done\n",
+      "Solving environment: failed with initial frozen solve. Retrying with flexible solve.\n",
+      "Solving environment: failed with repodata from current_repodata.json, will retry with next repodata source.\n",
+      "Collecting package metadata (repodata.json): done\n",
+      "Solving environment: failed with initial frozen solve. Retrying with flexible solve.\n",
+      "Solving environment: - \n",
+      "Found conflicts! Looking for incompatible packages.\n",
+      "This can take several minutes.  Press CTRL-C to abort.\n",
+      "Examining ipython:  62%|█████████████▋        | 199/319 [12:14<08:18,  4.16s/i- "
+     ]
+    }
+   ],
+   "source": [
+    "conda install -c conda-forge ngspice umap-learn scikit-learn matplotlib"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# simulate a PEG neuron (same type as in hemibrain paper)\n",
+    "from neuprint import NeuronModel\n",
+    "nm = NeuronModel(449438847)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "d9791b3f876c47c489e3486dd4a40518",
+       "version_major": 2,
+       "version_minor": 0
+      },
+      "text/plain": [
+       "HBox(children=(FloatProgress(value=0.0, max=12.0), HTML(value='')))"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "ename": "RuntimeError",
+     "evalue": "The 'ngspice' circuit simulation tool is not installed (or not on your PATH).\n\nPlease install it:\n\n  conda install -c conda-forge ngspice\n\n",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
+      "\u001b[0;32m/opt/anaconda3/lib/python3.7/site-packages/neuprint/simulation.py\u001b[0m in \u001b[0;36m_runspice\u001b[0;34m(self, drive, unique_outs)\u001b[0m\n\u001b[1;32m    567\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 568\u001b[0;31m             \u001b[0mp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mPopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mngspice\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"-b\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"-r\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstdin\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mPIPE\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstdout\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mDEVNULL\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstderr\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mDEVNULL\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    569\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mFileNotFoundError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/opt/anaconda3/lib/python3.7/subprocess.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, encoding, errors, text)\u001b[0m\n\u001b[1;32m    799\u001b[0m                                 \u001b[0merrread\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merrwrite\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 800\u001b[0;31m                                 restore_signals, start_new_session)\n\u001b[0m\u001b[1;32m    801\u001b[0m         \u001b[0;32mexcept\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/opt/anaconda3/lib/python3.7/subprocess.py\u001b[0m in \u001b[0;36m_execute_child\u001b[0;34m(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, start_new_session)\u001b[0m\n\u001b[1;32m   1550\u001b[0m                             \u001b[0merr_msg\u001b[0m \u001b[0;34m+=\u001b[0m \u001b[0;34m': '\u001b[0m \u001b[0;34m+\u001b[0m \u001b[0mrepr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merr_filename\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1551\u001b[0;31m                     \u001b[0;32mraise\u001b[0m \u001b[0mchild_exception_type\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merrno_num\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merr_msg\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merr_filename\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1552\u001b[0m                 \u001b[0;32mraise\u001b[0m \u001b[0mchild_exception_type\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merr_msg\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'ngspice': 'ngspice'",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001b[0;31mRuntimeError\u001b[0m                              Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-7-90436ebb2f47>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#Estimate neuron timing\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;31m#Run simulation for the given neuron\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mres\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnm\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msimulate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m/opt/anaconda3/lib/python3.7/site-packages/neuprint/simulation.py\u001b[0m in \u001b[0;36msimulate\u001b[0;34m(self, max_per_region)\u001b[0m\n\u001b[1;32m    731\u001b[0m         \u001b[0;32mfor\u001b[0m \u001b[0mdrive\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mtqdm\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdrive_list\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    732\u001b[0m             \u001b[0;31m# run simulation\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 733\u001b[0;31m             \u001b[0msim_results\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_runspice\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdrive\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0munique_outs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    734\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    735\u001b[0m             \u001b[0mdelay_data\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mappend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msim_results\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"delay\"\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mto_list\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/opt/anaconda3/lib/python3.7/site-packages/neuprint/simulation.py\u001b[0m in \u001b[0;36m_runspice\u001b[0;34m(self, drive, unique_outs)\u001b[0m\n\u001b[1;32m    571\u001b[0m                    \u001b[0;34m\"Please install it:\\n\\n\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    572\u001b[0m                    \"  conda install -c conda-forge ngspice\\n\\n\")\n\u001b[0;32m--> 573\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mRuntimeError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmsg\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    574\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    575\u001b[0m         \u001b[0mtitle\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'FIBSEM simulation\\n'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mRuntimeError\u001b[0m: The 'ngspice' circuit simulation tool is not installed (or not on your PATH).\n\nPlease install it:\n\n  conda install -c conda-forge ngspice\n\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Estimate neuron timing\n",
+    "#Run simulation for the given neuron\n",
+    "res = nm.simulate(2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
